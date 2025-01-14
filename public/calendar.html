@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>共有カレンダー</title>
+  <link rel="stylesheet" href="http://localhost:3000/style.css">
+</head>
+<body>
+  <!--サイドバーの各種ボタン-->
+      <div id="sidebar">
+      <h3>メニュー</h3>
+      
+      <ul>
+        <li><button class="openlist" onclick="openlist()">イベント一覧・検索</button></li>
+        <li><button onclick="OpenThemeMenu()">テーマ</button></li>
+        <li><button onclick="generalopenModal()">新規追加</button></li>
+        <li><button onclick="logout()">ログアウト</button></li>        
+      </ul>
+    </div>
+    <!--カレンダー本体部分-->
+  <div id="calendar">
+    <div id="calendar-header">
+      <button class="prevMonth" onclick="prevMonth()">前月</button>
+      <h2 id="current-month"></h2>
+      <button class="nextMonth" onclick="nextMonth()">次月</button>
+    </div>
+    <table id="calendar-days">
+      <thead>
+        <tr>
+          <th>日</th>
+          <th>月</th>
+          <th>火</th>
+          <th>水</th>
+          <th>木</th>
+          <th>金</th>
+          <th>土</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <!--イベント追加用-->
+  <div id="event-modal" class="modal">
+    <div class="modal-content">
+      <button id="closemodal-btn" onclick="closeModal()" class="close">閉じる</button>
+      <h3>イベントを追加</h3>
+      <input type="text" id="event-name" placeholder="イベント名">
+      <button id="addevent-btn" onclick="addEvent()">保存</button>
+    </div>
+  </div>
+  <div id="general-event-modal" class="modal">
+    <div class="modal-content">
+    <button id="closemodal-btn" onclick="generalcloseModal()" class="close">閉じる</button>
+    <h3>イベントを追加</h3>
+    <input type="date" id="general-event-date">
+    <input type="text" id="general-event-name" placeholder="イベント名">
+    <button id="save-general-event-btn"onclick="generaladdEvent()">保存</button>
+    </div>
+</div>
+  <!--イベント編集用-->
+<div id="edit-modal" class="modal">
+  <div class="modal-content">
+    <button id="closemodal-btn" onclick="closeeditModal()" class="close">閉じる</button>
+    <h3>イベントを編集</h3>
+    <input type="text" id="edit-event-name" placeholder="イベント名">
+    <div id="edit-event-day"></div>
+    <button id="saveEdit-btn" onclick="saveEdit()">保存</button>
+  </div>
+</div>
+<!--イベント一覧-->
+    <div id="event-list" class="list">
+    <div class="list-content">
+        <h2>イベントの検索</h2>
+        <input type="text" id="search-input" placeholder="イベントを検索">
+        <button id="search-button">検索</button>
+        <div id="search-results"></div>
+      <h2>登録されたイベント一覧</h2>
+        <button onclick="closelist()" class="close">閉じる</button>
+        <ul id="showevents"></ul>
+
+  </div> 
+  </div>
+<!--テーマ選択-->
+  <div id="ThemeMenu" class="ThemeMenu">
+    <div class="modal-content">
+      <h2>テーマを選択してください</h2>
+    <span onclick="CloseThemeMenu()" class="close">&times;</span>
+    <button onclick="setTheme('main')">メイン\テーマ</button>
+    <button onclick="setTheme('light')">ライトテーマ</button>
+    <button onclick="setTheme('dark')">ダークテーマ</button>
+    </div>
+  </div>
+  
+  <script src="calendar.js"></script>
+</body>
+</html>

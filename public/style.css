@@ -1,0 +1,359 @@
+/* カレンダーの全体レイアウト */
+body {
+    background-color:var(--background-color);
+    color:var(--text-color) ;
+ }
+#calendar {
+    width: 80%;
+    height: 80vh;
+    padding: 0;
+    margin-right:  20px; ;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color:var(--calendar-background);
+  }
+  
+  /* ヘッダー部分 */
+  #calendar-header {
+    display: flex;
+    border: none;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: var(--calendar-header);
+  }
+  
+  #calendar-header h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+
+
+  /* 前月・次月ボタン */
+  button {
+    background-color:var(--button-bg-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color:var(--button-hover);
+  }
+  
+  /* カレンダーの日付表示部分 */
+  #calendar-days {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #calendar-days th,
+  #calendar-days td {
+    width: 14.28%; /* 7日分に均等に割り当て */
+    text-align: center;
+    padding: 15px;
+    font-size: 18px;
+  }
+  
+  #calendar-days th {
+    background-color: #f1f1f1;
+  }
+  
+  #calendar-days .empty {
+    background-color: #e0e0e0;
+  }
+  
+  #calendar-days .day {
+    background-color: #ffffff;
+    cursor: pointer;
+  }
+  
+  #calendar-days .day:hover {
+    background-color: #e0f7fa;
+  }
+  
+  .event {
+    background-color: #4caf50;
+    color: white;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-top: 5px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  /* モーダルのスタイル */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .modal-content {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: auto;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(0);
+    transition: transform 0.3s ease-out;
+  }
+    
+  .modal-content h3 {
+    margin-top: 0;
+  }
+  
+  .modal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+/*編集モーダル*/
+#edit-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+#edit-modal .modal-content {
+  width: 400px;
+}
+
+#edit-modal .close {
+  font-size: 20px;
+
+}
+
+/* イベント一覧の表示 */
+#event-list {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+.list-content {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 50px auto;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(0);
+    transition: transform 0.3s ease-out;
+  }
+  
+  #showevents {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #showevents li {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .list-content .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  /* レスポンシブ対応 */
+  @media screen and (max-width: 600px) {
+    #calendar {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    #calendar-days th,
+    #calendar-days td {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    .modal-content,
+    .list-content {
+      width: 90%;
+    }
+  }
+  
+
+/* メインのレイアウト */
+#main-container {
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  /* サイドバー */
+  #sidebar {
+    width: 250px;
+    height: 100vh;
+    overflow: auto;
+    background-color: var(--sidebar-background-color);
+    padding: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+  }
+  
+  #sidebar h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  #sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #sidebar ul li {
+    margin-bottom: 10px;
+  }
+  
+  #sidebar button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color:var(--sidemenu-button-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  #sidebar button:hover {
+    background-color:var(--sidemenu-buttonH-color);
+  }
+  
+  /* カレンダー部分 */
+  #calendar {
+    flex-grow: 1;
+    margin-left: 270px; /* サイドバーの幅分だけスペースを確保 */
+    max-width: 800px;
+  }
+  
+  /* レスポンシブデザイン */
+  @media screen and (max-width: 768px) {
+
+    #sidebar {
+      position: relative;
+      width: 100%;
+      height: auto;
+      box-shadow: none;
+    }
+  
+    #calendar {
+      margin-left: 0;
+    }
+
+    
+  }
+  /*テーマ関連*/
+  .main-theme{
+    --background-color:#0c7445;
+    --calendar-background:white;
+    --button-hover:#45a049;
+    --calendar-header:rgb(235, 142, 20);
+    --text-color:black;
+    --sidebar-background-color:#008f4f;
+    --button-bg-color:#4CAF50;
+    --button-hover-bg-color:#45a049;
+    --sidemenu-button-color:#b81c22;
+    --sidemenu-buttonH-color:rgb(255, 59, 59);
+    
+  }
+  .light-theme {
+    --background-color: #ffffff;
+    --calendar-background:white;
+    --button-hover:#b6b6b6;
+    --calendar-header:rgb(#ffffff);
+    --text-color: #000000;
+    --sidebar-background-color:#707070;
+    --button-bg-color: #cecece;
+    --button-hover-bg-color:#7e7e7e;
+    --sidemenu-button-color:#0556a1;
+    --sidemenu-buttonH-color:rgb(47, 189, 255);
+  }
+  
+  .dark-theme {
+    --background-color: #333333;
+    --calendar-background:white;
+    --button-hover:#b6b6b6;
+    --calendar-header:rgb(#ffffff);
+    --text-color: black;
+    --sidebar-background-color:#707070;
+    --button-bg-color: #555555;
+    --button-hover-bg-color:#7e7e7e;
+    --sidemenu-button-color:#0556a1;
+    --sidemenu-buttonH-color:rgb(47, 189, 255);
+  }
+  #ThemeMenu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  .list-themes{
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 50px auto;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+
+
+  .list-content {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 50px auto;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  #showevents {
+    list-style-type: none;
+    padding: 0;
+  }
