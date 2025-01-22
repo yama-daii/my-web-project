@@ -11,7 +11,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname)));
+app.use('/views', express.static(path.join(__dirname, 'views')));
 
 // データベース接続
 const db = new sqlite3.Database('./db/database.db', (err) => {
